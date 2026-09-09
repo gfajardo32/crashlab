@@ -16,13 +16,9 @@ $LogFile = "C:\CrashLab\harness.log"
 
 # argv is ARGUMENTS ONLY. VBoxManage does not want the program name repeated.
 $Faults = @(
-    @{ name = "mem-slow-50mb"; proc = "Testlimit64"
+    @{ name = "mem-slow-15mb"; proc = "Testlimit64"
        exe  = "C:\CrashData\sysinternals\Testlimit64.exe"
-       argv = @("-accepteula","-d","50","-e","1") },
-
-    @{ name = "handles"; proc = "Testlimit64"
-       exe  = "C:\CrashData\sysinternals\Testlimit64.exe"
-       argv = @("-accepteula","-h","-u") }
+       argv = @("-accepteula","-d","15","-e","1") }
 )
 
 $BaselineMinMin  = 5
@@ -89,12 +85,11 @@ function Test-FaultRunning {
 function Sync-Git {
     param([string]$repo, [string]$msg)
     try {
-        Start-Process -FilePath "git" -ArgumentList @("-C",$repo,"add","-A") -NoNewWindow -Wait
-        Start-Process -FilePath "git" -ArgumentList @("-C",$repo,"commit","-m",$msg) -NoNewWindow -Wait
-        Start-Process -FilePath "git" -ArgumentList @("-C",$repo,"push") -NoNewWindow -Wait
+        & git -C $repo add -A 2>&1 | Out-Null
+        & git -C $repo commit -m $msg 2>&1 | Out-Null
+        & git -C $repo push 2>&1 | Out-Null
     } catch { }
 }
-
 function Say { param($msg, $color = "Gray") Write-Host $msg -ForegroundColor $color }
 
 New-Item -ItemType Directory -Path $OutRoot -Force | Out-Null
