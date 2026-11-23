@@ -1,0 +1,491 @@
+{
+  "protocol_version": 3,
+  "runs": [
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--stepped",
+        "B"
+      ],
+      "condition": "stepped",
+      "order": 1,
+      "pattern": "B",
+      "slot_id": "stepped-02",
+      "split": "dev"
+    },
+    {
+      "burst_seed": 1661058044,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--healthy-control",
+        "--burst-seed",
+        "1661058044"
+      ],
+      "condition": "healthy",
+      "order": 2,
+      "pattern": null,
+      "slot_id": "healthy-05",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "10"
+      ],
+      "condition": "ramp10",
+      "order": 3,
+      "pattern": null,
+      "slot_id": "ramp10-02",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "15"
+      ],
+      "condition": "ramp15",
+      "order": 4,
+      "pattern": null,
+      "slot_id": "ramp15-01",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--plateau-percent",
+        "96"
+      ],
+      "condition": "plateau96",
+      "order": 5,
+      "pattern": null,
+      "slot_id": "plateau96-04",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--stepped",
+        "A"
+      ],
+      "condition": "stepped",
+      "order": 6,
+      "pattern": "A",
+      "slot_id": "stepped-01",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--stepped",
+        "A"
+      ],
+      "condition": "stepped",
+      "order": 7,
+      "pattern": "A",
+      "slot_id": "stepped-03",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "5"
+      ],
+      "condition": "ramp5",
+      "order": 8,
+      "pattern": null,
+      "slot_id": "ramp5-04",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "10"
+      ],
+      "condition": "ramp10",
+      "order": 9,
+      "pattern": null,
+      "slot_id": "ramp10-03",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "15"
+      ],
+      "condition": "ramp15",
+      "order": 10,
+      "pattern": null,
+      "slot_id": "ramp15-04",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--stepped",
+        "B"
+      ],
+      "condition": "stepped",
+      "order": 11,
+      "pattern": "B",
+      "slot_id": "stepped-04",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "5"
+      ],
+      "condition": "ramp5",
+      "order": 12,
+      "pattern": null,
+      "slot_id": "ramp5-01",
+      "split": "dev"
+    },
+    {
+      "burst_seed": 1022013232,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--healthy-control",
+        "--burst-seed",
+        "1022013232"
+      ],
+      "condition": "healthy",
+      "order": 13,
+      "pattern": null,
+      "slot_id": "healthy-01",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "15"
+      ],
+      "condition": "ramp15",
+      "order": 14,
+      "pattern": null,
+      "slot_id": "ramp15-03",
+      "split": "dev"
+    },
+    {
+      "burst_seed": 268024657,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--healthy-control",
+        "--burst-seed",
+        "268024657"
+      ],
+      "condition": "healthy",
+      "order": 15,
+      "pattern": null,
+      "slot_id": "healthy-04",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--plateau-percent",
+        "96"
+      ],
+      "condition": "plateau96",
+      "order": 16,
+      "pattern": null,
+      "slot_id": "plateau96-01",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--stepped",
+        "B"
+      ],
+      "condition": "stepped",
+      "order": 17,
+      "pattern": "B",
+      "slot_id": "stepped-05",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "5"
+      ],
+      "condition": "ramp5",
+      "order": 18,
+      "pattern": null,
+      "slot_id": "ramp5-02",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "5"
+      ],
+      "condition": "ramp5",
+      "order": 19,
+      "pattern": null,
+      "slot_id": "ramp5-03",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": 1651922394,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--healthy-control",
+        "--burst-seed",
+        "1651922394"
+      ],
+      "condition": "healthy",
+      "order": 20,
+      "pattern": null,
+      "slot_id": "healthy-02",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": 155516428,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--healthy-control",
+        "--burst-seed",
+        "155516428"
+      ],
+      "condition": "healthy",
+      "order": 21,
+      "pattern": null,
+      "slot_id": "healthy-03",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "15"
+      ],
+      "condition": "ramp15",
+      "order": 22,
+      "pattern": null,
+      "slot_id": "ramp15-05",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--plateau-percent",
+        "96"
+      ],
+      "condition": "plateau96",
+      "order": 23,
+      "pattern": null,
+      "slot_id": "plateau96-02",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "5"
+      ],
+      "condition": "ramp5",
+      "order": 24,
+      "pattern": null,
+      "slot_id": "ramp5-05",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "10"
+      ],
+      "condition": "ramp10",
+      "order": 25,
+      "pattern": null,
+      "slot_id": "ramp10-05",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "15"
+      ],
+      "condition": "ramp15",
+      "order": 26,
+      "pattern": null,
+      "slot_id": "ramp15-02",
+      "split": "held_out"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--plateau-percent",
+        "96"
+      ],
+      "condition": "plateau96",
+      "order": 27,
+      "pattern": null,
+      "slot_id": "plateau96-05",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "10"
+      ],
+      "condition": "ramp10",
+      "order": 28,
+      "pattern": null,
+      "slot_id": "ramp10-01",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--plateau-percent",
+        "96"
+      ],
+      "condition": "plateau96",
+      "order": 29,
+      "pattern": null,
+      "slot_id": "plateau96-03",
+      "split": "dev"
+    },
+    {
+      "burst_seed": null,
+      "collector_args": [
+        "1",
+        "--surface-data",
+        "--responsiveness",
+        "--protocol-v3",
+        "--ramp",
+        "10"
+      ],
+      "condition": "ramp10",
+      "order": 30,
+      "pattern": null,
+      "slot_id": "ramp10-04",
+      "split": "held_out"
+    }
+  ],
+  "seed": 20261122
+}
