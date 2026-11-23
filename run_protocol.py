@@ -7,6 +7,7 @@ import json
 import os
 import re
 import shlex
+import shutil
 import subprocess
 import sys
 from datetime import timedelta
@@ -21,6 +22,8 @@ PROJECT = Path(__file__).resolve().parent
 RUN_LOG_FIELDS = ("slot_id", "run_id", "status", "reason")
 RUN_BANNER = re.compile(r"=== (laptop_[A-Za-z0-9_-]+) ===")
 SAVED_PREFIX = "  saved responsiveness telemetry -> "
+GIB = 2**30
+MIN_FREE_GIB = 15
 
 
 def next_slot(slots, attempts):
@@ -220,6 +223,12 @@ def run_next(project, runs_dir, *, dry_run=False):
         print(shlex.join(command), flush=True)
         if dry_run:
             return 0
+        volume_path = runs_dir if runs_dir.exists() else runs_dir.parent
+        free_bytes = shutil.disk_usage(volume_path).free
+        if free_bytes < MIN_FREE_GIB * GIB:
+            print(f"Only {free_bytes / GIB:.2f} GiB free ({free_bytes:,} bytes) on the crashlab-data volume. "
+                  f"At least {MIN_FREE_GIB} GiB is required to start a slot.")
+            return 2
         before = {p.name for p in runs_dir.iterdir()} if runs_dir.is_dir() else set()
         run_id = ""
         try:

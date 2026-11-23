@@ -24,6 +24,12 @@ class RunProtocolTests(unittest.TestCase):
         "collector_args": ["1", "--surface-data", "--responsiveness", "--protocol-v3", "--ramp", "15"],
     }
 
+    def setUp(self):
+        disk_usage = patch("shutil.disk_usage")
+        self.disk_usage = disk_usage.start()
+        self.addCleanup(disk_usage.stop)
+        self.disk_usage.return_value.free = 20 * 2**30
+
     def stamp(self, seconds):
         return (self.start + timedelta(seconds=seconds)).isoformat()
 
@@ -106,9 +112,39 @@ class RunProtocolTests(unittest.TestCase):
             with patch.object(run_protocol, "launch_collector") as launch, redirect_stdout(io.StringIO()) as text:
                 self.assertEqual(run_protocol.run_next(project, project / "runs", dry_run=True), 0)
             launch.assert_not_called()
+            self.disk_usage.assert_not_called()
             self.assertIn(self.slot["slot_id"], text.getvalue())
             self.assertIn(" ".join(self.slot["collector_args"]), text.getvalue())
             self.assertEqual(log.read_bytes(), before)
+
+    def test_low_disk_space_does_not_start_or_log_an_attempt(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            log = self.setup_project(project)
+            before = log.read_bytes()
+            runs = project / "runs"
+            runs.mkdir()
+            with patch.object(run_protocol, "launch_collector", return_value=(1, "")) as launch, \
+                    redirect_stdout(io.StringIO()) as text:
+                self.disk_usage.return_value.free = 14 * 2**30
+                self.assertEqual(run_protocol.run_next(project, runs), 2)
+            self.disk_usage.assert_called_once_with(runs)
+            launch.assert_not_called()
+            self.assertIn("14.00 GiB", text.getvalue())
+            self.assertEqual(log.read_bytes(), before)
+
+    def test_sufficient_disk_space_starts_the_collector(self):
+        for gib in (15, 16):
+            with self.subTest(gib=gib), tempfile.TemporaryDirectory() as temporary:
+                project = Path(temporary)
+                self.setup_project(project)
+                runs = project / "runs"
+                self.disk_usage.reset_mock()
+                with patch.object(run_protocol, "launch_collector", return_value=(1, "")) as launch:
+                    self.disk_usage.return_value.free = gib * 2**30
+                    self.assertEqual(run_protocol.run_next(project, runs), 1)
+                self.disk_usage.assert_called_once_with(project)
+                launch.assert_called_once()
 
     def test_failed_collector_appends_invalid_and_retries_same_slot(self):
         with tempfile.TemporaryDirectory() as temporary:
