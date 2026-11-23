@@ -1,2 +1,11 @@
 slot_id,run_id,status,reason
 stepped-02,,invalid,collector exited with status 1
+stepped-02,laptop_20261123_000344_responsiveness-stepped,valid,
+healthy-05,laptop_20261123_010658_responsiveness-control,valid,
+ramp10-02,laptop_20261123_015243_responsiveness-ramp,valid,
+ramp15-01,laptop_20261123_022323_responsiveness-ramp,valid,
+plateau96-04,laptop_20261123_025105_responsiveness-plateau,valid,
+stepped-01,laptop_20261123_032852_responsiveness-stepped,valid,
+stepped-03,laptop_20261123_040938_responsiveness-stepped,valid,
+ramp5-04,laptop_20261123_045021_responsiveness-ramp,valid,
+ramp10-03,laptop_20261123_053106_responsiveness-ramp,valid,
