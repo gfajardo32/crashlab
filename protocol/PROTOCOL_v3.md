@@ -48,3 +48,11 @@ A run is invalid and re-collected in the same slot (same condition, split, patte
 ## Amendments
 
 v3.1: Surface restart is forced. The unforced restart failed before slot 1 (logged invalid in run_log.csv) because autologon keeps a console session. No protocol data existed.
+
+v3.2: Made before any held-out scoring. Runs collected under v3.1 (`fe5bc67`) and v3.2 are pooled because all collection, labeling, and slope-scoring files are byte-identical between the two freezes.
+
+(a) Event baseline: alarm at a cutoff if any System event Id 2004 occurred in the previous 300 s. Fixed rule, no tuning.
+
+(b) LLM arm: prompts built only from data at or before the cutoff: the 5-min lookback of commit percent and available MiB in 30 s bins, plus System event Id and level only (no message text, no run metadata). Same base model and QLoRA settings as train_llm.py, 1 epoch. Trained on the 18 development runs only. The alarm threshold is chosen with 3-fold cross-validation grouped by run on the development runs, using the same scoring and the same 1.0 episodes/hour budget as the slope rule (most on-time catches within budget; ties go to the lower false-alarm rate). The final model is trained on all 18 development runs.
+
+(c) Held-out: one command scores the chosen slope rule, the event baseline, and the final LLM together, once, and refuses to run unless the slope selection and the LLM threshold are already recorded.
