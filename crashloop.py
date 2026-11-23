@@ -932,7 +932,7 @@ def restart_for_protocol():
         "    (Get-Process Testlimit64 -ErrorAction SilentlyContinue) -or "
         "    (Get-ScheduledTask -TaskName 'CrashLab-Response-*' -ErrorAction SilentlyContinue "
         "     | Where-Object State -eq 'Running')) { throw 'Surface is not ready for a protocol restart' }; "
-        "Restart-Computer",
+        "Restart-Computer -Force",
         timeout=30,
     )
     if not ok and not any(word in reason.lower() for word in ("reset", "closed", "broken pipe")):

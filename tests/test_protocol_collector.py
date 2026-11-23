@@ -57,7 +57,6 @@ class ProtocolCollectorTests(unittest.TestCase):
             protocol = root / "protocol"
             protocol.mkdir()
             files = (protocol / "PROTOCOL_v3.md", protocol / "protocol_v3.json")
-            hashes = []
 
             def git(*args):
                 return subprocess.check_output(["git", "-C", folder, *args], text=True).strip()
@@ -71,11 +70,22 @@ class ProtocolCollectorTests(unittest.TestCase):
                 (root / name).write_text(name, encoding="utf-8")
             for file in files:
                 file.write_text(file.name, encoding="utf-8")
-                hashes.append(hashlib.sha256(file.read_bytes()).hexdigest())
             git("add", "-A")
-            commit("Freeze\n\n" + "\n".join(hashes))
+            commit("Freeze\n\n" + "\n".join(hashlib.sha256(file.read_bytes()).hexdigest() for file in files))
             freeze = git("rev-parse", "HEAD")
             self.assertEqual(self.env["verify_protocol_freeze"](root), freeze)
+
+            amended_source = root / "crashloop.py"
+            files[0].write_text("Protocol v3.1: forced restart", encoding="utf-8")
+            amended_source.write_text("Restart-Computer -Force", encoding="utf-8")
+            with self.assertRaises(RuntimeError):
+                self.env["verify_protocol_freeze"](root)
+            git("add", "--", str(files[0]), str(amended_source))
+            commit("Freeze v3.1\n\n" + "\n".join(hashlib.sha256(file.read_bytes()).hexdigest() for file in files))
+            amended_freeze = git("rev-parse", "HEAD")
+            self.assertNotEqual(amended_freeze, freeze)
+            self.assertEqual(self.env["verify_protocol_freeze"](root), amended_freeze)
+
             for file in (*files, *(root / name for name in PINNED_SOURCES)):
                 with self.subTest(file=file):
                     original = file.read_bytes()
@@ -87,7 +97,8 @@ class ProtocolCollectorTests(unittest.TestCase):
                     with self.assertRaises(RuntimeError):
                         self.env["verify_protocol_freeze"](root)
                     git("reset", "-q", "HEAD", "--", str(file))
-            edited_source = root / PINNED_SOURCES[0]
+            edited_source = amended_source
+            frozen_source = edited_source.read_bytes()
             edited_source.write_text("changed in a later commit", encoding="utf-8")
             git("add", "--", str(edited_source))
             commit("Change source after freeze")
@@ -95,9 +106,27 @@ class ProtocolCollectorTests(unittest.TestCase):
                 self.env["verify_protocol_freeze"](root)
             git("rm", "-q", "--", str(edited_source))
             commit("Remove a pinned source")
-            edited_source.write_text(PINNED_SOURCES[0], encoding="utf-8")
+            edited_source.write_bytes(frozen_source)
             with self.assertRaises(RuntimeError):
                 self.env["verify_protocol_freeze"](root)
+
+    def test_protocol_restart_forces_console_session_to_close(self):
+        old_boot = "2026-11-22T07:30:00+00:00"
+        new_boot = "2026-11-22T07:32:00+00:00"
+        freeze = "a" * 40
+        restart = Mock(return_value=(True, ""))
+        overrides = {
+            "verify_protocol_freeze": Mock(return_value=freeze),
+            "boot_time": Mock(return_value=old_boot),
+            "verified_boot_time": Mock(return_value=new_boot),
+            "surface_utc_now": Mock(return_value="2026-11-22T07:37:00+00:00"),
+            "wait_until": lambda predicate, *args: predicate(),
+            "ps": restart,
+        }
+        with patch.dict(self.env, overrides), patch.object(self.env["time"], "sleep"):
+            self.assertEqual(self.env["restart_for_protocol"](), (new_boot, freeze))
+        restart.assert_called_once()
+        self.assertTrue(restart.call_args.args[0].endswith("; Restart-Computer -Force"))
 
     def test_protocol_cli_routes_the_stepped_pattern(self):
         argv = ["crashloop.py", "1", "--surface-data", "--responsiveness",

@@ -44,3 +44,7 @@ At each cutoff (10 s stride), fit least squares to commit/limit samples in (cuto
 
 ## 7. Run validity (decided before data, never based on labels)
 A run is invalid and re-collected in the same slot (same condition, split, pattern) if: workload failed to start or stop as configured; PowerShell slot coverage < 95% outside the onset sequence; unexpected reboot; plateau or stepped hold not within +/-1 point of target for >= 80% of the hold; Mac-side loss of the trace. Every invalid run and reason is logged in protocol/run_log.csv.
+
+## Amendments
+
+v3.1: Surface restart is forced. The unforced restart failed before slot 1 (logged invalid in run_log.csv) because autologon keeps a console session. No protocol data existed.

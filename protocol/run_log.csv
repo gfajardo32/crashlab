@@ -1,1 +1,2 @@
 slot_id,run_id,status,reason
+stepped-02,,invalid,collector exited with status 1
