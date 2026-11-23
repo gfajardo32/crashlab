@@ -13,3 +13,4 @@ ramp15-04,laptop_20261123_111710_responsiveness-ramp,valid,
 stepped-04,laptop_20261123_114442_responsiveness-stepped,valid,
 ramp5-01,laptop_20261123_122521_responsiveness-ramp,valid,
 healthy-01,laptop_20261123_130558_responsiveness-control,invalid,collector exited with status 1
+healthy-01,,invalid,collector exited with status 1
